@@ -40,13 +40,13 @@ class SaftUpload extends Controller
                     $company = Company::create([
                         "name" => $header->getCompanyName(),
                         "tax_registration_number" => $header->getTaxRegistrationNumber(),
-                        "phone" => preg_replace("/[^+A-Za-z\d ]/", '',$header->getTelephone()),
-                        "fax" => preg_replace("/[^+A-Za-z\d ]/", '',$header->getFax()),
+                        "phone" => preg_replace("/[^+A-Za-z\d ]/", '', $header->getTelephone()),
+                        "fax" => preg_replace("/[^+A-Za-z\d ]/", '', $header->getFax()),
                         "email" => $header->getEmail(),
                         "website" => $header->getWebsite(),
                         "address_detail" => $companyAddress->getAddressDetail(),
                         "address_postal_code" => $companyAddress->getPostalCode(),
-                        "address_country" => $companyAddress->getCountry(),
+                        "address_country" => $companyAddress->getCountry()->get(),
                         "address_city" => $companyAddress->getCity()
                     ]);
                 }
@@ -62,7 +62,7 @@ class SaftUpload extends Controller
                             "description" => $product->getProductDescription(),
                             "code" => $product->getProductCode(),
                             "family" => $product->getProductGroup(),
-                            "type" => $product->getProductType(),
+                            "type" => $product->getProductType()->get(),
                             "number_code" => $product->getProductNumberCode(),
                             "company_id" => $company->id
                         ]);
@@ -96,8 +96,8 @@ class SaftUpload extends Controller
                             "invoice_number" => $salesInvoice->getInvoiceNo(),
                             "invoice_date" => Carbon::createFromFormat("Y-m-d", $salesInvoice->getInvoiceDate()->format("Y-m-d")),
                             "shipping_city" => $shippingAddress->getCity(),
-                            "shipping_country" => $shippingAddress->getCountry(),
-                            "invoice_type" => $salesInvoice->getInvoiceType(),
+                            "shipping_country" => $shippingAddress->getCountry()->get(),
+                            "invoice_type" => $salesInvoice->getInvoiceType()->get(),
                             "taxPayable" => $documentTotals->getTaxPayable(),
                             "netTotal" => $documentTotals->getNetTotal(),
                             "grossTotal" => $documentTotals->getGrossTotal()
