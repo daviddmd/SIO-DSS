@@ -2,7 +2,11 @@
 
 ## Generic Decision Support System for a Company using SAF-T PT Files
 
-### Applied in the context of fictional company 2Life IT
+This application was done for the Organizational Information Systems subject of the Informatics Engineering Degree.
+
+Its goal is to provide organizations with a Decision Support System based on their company accounting activity, which
+may be contained in a [SAF-T file](https://en.wikipedia.org/wiki/SAF-T) (purchases and sales), providing an interface to manage multiple companies, and for
+each one several statistics (on the dashboard with graphs), groupings of customers, products and invoices.
 
 ## Installation Instructions
 
@@ -44,3 +48,5 @@
       it may be viewed.
     - "Company Details", where all the details of the company may be viewed, and the company may be deleted (alongside
       with all its invoices, products and customers).
+
+![Application Dashboard](files/screenshot-dashboard.png?raw=true "Application Dashboard")
