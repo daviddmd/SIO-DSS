@@ -16,7 +16,7 @@
         "laravel/sanctum": "^v2.15.1",
         "laravel/tinker": "^v2.7.2",
         "livewire/livewire": "^v2.10.7",
-        "joaomfrebelo/saft-pt_4_php": "dev-master"
+        "joaomfrebelo/saft-pt_4_php": "2.0.2"
     },
     "require-dev": {
         "fakerphp/faker": "^v1.20.0.0",
@@ -67,12 +67,6 @@
         }
     },
     "minimum-stability": "dev",
-    "prefer-stable": true,
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "https://github.com/daviddmd/Saft-PT_4_PHP.git"
-        }
-    ]
+    "prefer-stable": true
 
 }
