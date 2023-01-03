@@ -22,6 +22,7 @@ class CompanyGraphs extends Component
 
     public $company;
     public $year = '';
+    private $years;
     protected $listeners = [
         'customerClick' => 'handleCustomerClick',
     ];
@@ -34,8 +35,13 @@ class CompanyGraphs extends Component
 
     public function mount($company)
     {
-        $this->year = date("Y");
+        //Obtém todos os anos de faturas presentes no sistema
+        $years = Invoice::where("company_id", "=", $this->company->id)->
+        selectRaw("YEAR(invoice_date) as invoiceYear")->
+        groupBy("invoiceYear")->pluck("invoiceYear")->toArray();
+        $this->year = count($years) > 0 ? $years[0] : date("Y");
         $this->company = $company;
+        $this->years = $years;
     }
 
     function random_color_part(): string
@@ -124,10 +130,6 @@ class CompanyGraphs extends Component
             $salesNumberLineChart->addPoint($monthName, intval($monthSales["numberSales"]));
             $salesAmountLineChart->addPoint($monthName, floatval($monthSales["totalSales"]));
         }
-        //Obtém todos os anos de faturas presentes no sistema
-        $years = Invoice::where("company_id", "=", $this->company->id)->
-        selectRaw("YEAR(invoice_date) as invoiceYear")->
-        groupBy("invoiceYear")->pluck("invoiceYear")->toArray();
         $cities = Invoice::where("company_id", "=", $this->company->id)->
         whereYear("invoice_date", $this->year)->
         where("invoice_type", "!=", InvoiceType::NC)->
@@ -153,7 +155,7 @@ class CompanyGraphs extends Component
             "topProductsByAmountBilled" => $topProductsByAmountBilled,
             "salesNumberLineChart" => $salesNumberLineChart,
             "salesAmountLineChart" => $salesAmountLineChart,
-            "years" => $years,
+            "years" => $this->years,
             "citiesPieChart" => $citiesPieChart,
             "citiesBarChart" => $citiesBarChart
         ]);
